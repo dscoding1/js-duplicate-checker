@@ -1,0 +1,61 @@
+//First --> define the variables
+
+const path = require('path');
+
+function compressArray(original) {
+ 
+	var compressed = [];
+	// make a copy of the input array
+	var copy = original.slice(0);
+ 
+	// first loop goes over every element
+	for (var i = 0; i < original.length; i++) {
+ 
+		var myCount = 0;	
+		// loop over every element in the copy and see if it's the same
+		for (var w = 0; w < copy.length; w++) {
+			if (original[i] == copy[w]) {
+				// increase amount of times duplicate is found
+				myCount++;
+				// sets item to undefined
+				delete copy[w];
+			}
+		}
+ 
+		if (myCount === 1) {
+			var a = new Object();
+			a.value = original[i];
+			a.count = myCount;
+			compressed.push(a);
+		}
+	}
+ 
+	return compressed;
+};
+
+
+//var path = __dirname
+//var myFiles = path.getFiles();
+
+
+var MyArray = ['IMG_6520','IMG_6520','IMG_1551','IMG_1552']
+
+
+var newArray = compressArray(MyArray);
+
+console.log(newArray);
+
+
+//Output MyArray to a .txt file in the directory
+
+
+var fs = require('fs');
+
+fs.writeFile('JPEG/RAW_discrepancies.txt', newArray, function (err){
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("File saved");
+    }
+});
+
